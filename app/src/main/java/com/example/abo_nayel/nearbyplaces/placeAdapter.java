@@ -2,8 +2,6 @@ package com.example.abo_nayel.nearbyplaces;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -14,8 +12,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.abo_nayel.nearbyplaces.Model.PlaceModel;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -38,25 +36,30 @@ public class placeAdapter extends ArrayAdapter {
         }
 
 
-        PlaceModel placeModel = (PlaceModel) getItem(position);
-        Button button=(Button)convertView.findViewById(R.id.button2);
-        button.setFocusable(false);
+        final PlaceModel placeModel = (PlaceModel) getItem(position);
+        Button nav=(Button)convertView.findViewById(R.id.button2);
+        nav.setFocusable(false);
+
         TextView name =(TextView) convertView.findViewById(R.id.Pname);
         TextView type = (TextView)convertView.findViewById(R.id.type);
-        //RatingBar r = (RatingBar) convertView.findViewById(R.id.ratingBar);
+        RatingBar r = (RatingBar) convertView.findViewById(R.id.ratingBar);
         ImageView i = (ImageView) convertView.findViewById(R.id.photo);
         Picasso.with(getContext()).load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=40&photoreference="+
-                placeModel.photos[0].getPhoto_reference()+"&key=AIzaSyDi9JdUYE28KGzwm5t-dLONa4zIaVne6jc").into(i);
+                placeModel.getPhotos().get(0).getPhotoReference()+"&key=AIzaSyDi9JdUYE28KGzwm5t-dLONa4zIaVne6jc").into(i);
 //        Toast.makeText(getContext(),placeModel.photos[0].getPhoto_reference(),Toast.LENGTH_SHORT).show();
 //        r.setIsIndicator(true);
-//        r.setRating(placeModel.getRating());
-        button.setOnClickListener(new View.OnClickListener() {
+        r.setRating(placeModel.getRating().floatValue());
+        nav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent i =new Intent(getContext(),MapsActivity.class);
+                i.putExtra("lat",placeModel.getGeometry().getLocation().getLat());
+                i.putExtra("lat",placeModel.getGeometry().getLocation().getLng());
+                i.putExtra("name",placeModel.getName());
+                getContext().startActivity(i);
             }
         });
-        type.setText(placeModel.getTypes()[1]);
+        type.setText(placeModel.getTypes().get(1));
         name.setText(placeModel.getName());
         return convertView;
     }

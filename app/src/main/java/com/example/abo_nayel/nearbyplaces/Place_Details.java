@@ -1,6 +1,7 @@
 package com.example.abo_nayel.nearbyplaces;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +12,11 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.abo_nayel.nearbyplaces.Model.PlaceModel;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
+
+import java.io.Serializable;
 
 public class Place_Details extends AppCompatActivity {
 
@@ -20,6 +25,7 @@ public class Place_Details extends AppCompatActivity {
     RatingBar r;
     TextView nam , ty;
     Button fav,nav;
+    PlaceModel placeModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +38,23 @@ public class Place_Details extends AppCompatActivity {
         nav = (Button)findViewById(R.id.navbtn) ;
         r= (RatingBar)findViewById(R.id.ratingBar);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("fav data", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.clear();
+        Gson gson = new Gson();
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                placeModel = new PlaceModel();
+            }
+        });
+
          lat = getIntent().getDoubleExtra("lat",0);
          lng = getIntent().getDoubleExtra("lng",0);
+        PlaceModel place = (PlaceModel) getIntent().getSerializableExtra("this place");
+        Toast.makeText(this,place.getName(),Toast.LENGTH_SHORT).show();
+
         String name = getIntent().getStringExtra("name");
         String type = getIntent().getStringExtra("type");
         String ph_ref = getIntent().getStringExtra("ph ref");

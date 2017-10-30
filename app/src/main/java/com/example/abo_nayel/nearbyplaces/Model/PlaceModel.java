@@ -1,11 +1,12 @@
 
 package com.example.abo_nayel.nearbyplaces.Model;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PlaceModel {
+public class PlaceModel implements Serializable {
 
     @SerializedName("geometry")
     @Expose

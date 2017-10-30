@@ -1,6 +1,7 @@
 package com.example.abo_nayel.nearbyplaces;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,6 +24,8 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.Serializable;
 
 
 public class Search extends AppCompatActivity {
@@ -49,11 +53,15 @@ public class Search extends AppCompatActivity {
     Button searchbtn,logout , fav;
     TextView t1,t2;
      PlaceModel[] placeModels;
-
+    double lat,lng;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        lat = getIntent().getDoubleExtra("lat",0);
+        lng = getIntent().getDoubleExtra("lng",0);
+        Toast.makeText(getApplicationContext(),lat+","+lng,Toast.LENGTH_SHORT).show();
         places = (ListView)findViewById(R.id.searchList);
         searchtxt = (EditText)findViewById(R.id.searchtxt);
         searchbtn =(Button)findViewById(R.id.searchbtn);
@@ -112,12 +120,13 @@ public class Search extends AppCompatActivity {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Intent i = new Intent(getApplicationContext(), Place_Details.class);
 
+                            i.putExtra("this place",(Parcelable) placeModels[position]);
                             i.putExtra("lat" , placeModels[position].getGeometry().getLocation().getLat());
                             i.putExtra("lng" ,placeModels[position].getGeometry().getLocation().getLng() );
                             i.putExtra("rat",placeModels[position].getRating().floatValue());
                             i.putExtra("name", placeModels[position].getName());
                             i.putExtra("type",placeModels[position].getTypes().get(1));
-                            i.putExtra("ph ref",placeModels[position].getPhotos().get(0).getPhotoReference());
+                            i.putExtra("ph ref", placeModels[position].getPhotos().get(0).getPhotoReference());
 
                             startActivity(i);
                         }

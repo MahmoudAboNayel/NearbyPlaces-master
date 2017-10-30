@@ -37,15 +37,16 @@ public class placeAdapter extends ArrayAdapter {
 
 
         final PlaceModel placeModel = (PlaceModel) getItem(position);
-        Button nav=(Button)convertView.findViewById(R.id.button2);
+        Button nav = (Button) convertView.findViewById(R.id.button2);
         nav.setFocusable(false);
 
-        TextView name =(TextView) convertView.findViewById(R.id.Pname);
-        TextView type = (TextView)convertView.findViewById(R.id.type);
+        TextView name = (TextView) convertView.findViewById(R.id.Pname);
+        TextView type = (TextView) convertView.findViewById(R.id.type);
         RatingBar r = (RatingBar) convertView.findViewById(R.id.ratingBar);
         ImageView i = (ImageView) convertView.findViewById(R.id.photo);
-        Picasso.with(getContext()).load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=40&photoreference="+
-                placeModel.getPhotos().get(0).getPhotoReference()+"&key=AIzaSyDi9JdUYE28KGzwm5t-dLONa4zIaVne6jc").into(i);
+        if (placeModel.getPhotos().get(0).getPhotoReference().equals(null)) {
+        }else Picasso.with(getContext()).load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=40&photoreference=" +
+                placeModel.getPhotos().get(0).getPhotoReference() + "&key=AIzaSyDi9JdUYE28KGzwm5t-dLONa4zIaVne6jc").into(i);
 //        Toast.makeText(getContext(),placeModel.photos[0].getPhoto_reference(),Toast.LENGTH_SHORT).show();
 //        r.setIsIndicator(true);
         r.setRating(placeModel.getRating().floatValue());

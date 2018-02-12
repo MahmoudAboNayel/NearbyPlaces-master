@@ -86,6 +86,7 @@ public class PlaceModel implements Serializable {
     }
 
     public List<Photo> getPhotos() {
+
         return photos;
     }
 

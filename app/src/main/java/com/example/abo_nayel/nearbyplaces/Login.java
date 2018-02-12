@@ -80,8 +80,6 @@ public class Login extends AppCompatActivity implements LocationListener,GoogleA
 
             onLocationChanged(location);
 
-        } else {
-
         }
         Toast.makeText(Login.this,location.getLatitude()+","+location.getLongitude(),Toast.LENGTH_SHORT).show();
         signUp= (Button)findViewById(R.id.signup);
@@ -182,7 +180,7 @@ public class Login extends AppCompatActivity implements LocationListener,GoogleA
             Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                     mGoogleApiClient);
             createLocationRequest();
-            final PendingResult<Status> statusPendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, (com.google.android.gms.location.LocationListener) this);
+            //final PendingResult<Status> statusPendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, (com.google.android.gms.location.LocationListener) this);
 
             if (mLastLocation != null) {
                 Log.d("zzz", "onConnected: "+ mLastLocation.getLatitude()+" m "+mLastLocation.getLongitude() );
@@ -197,7 +195,6 @@ public class Login extends AppCompatActivity implements LocationListener,GoogleA
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
     }
 
 

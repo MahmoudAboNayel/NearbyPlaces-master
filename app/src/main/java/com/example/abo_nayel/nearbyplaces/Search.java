@@ -120,13 +120,13 @@ public class Search extends AppCompatActivity {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             Intent i = new Intent(getApplicationContext(), Place_Details.class);
 
-                            i.putExtra("this place",(Parcelable) placeModels[position]);
+                           // i.putExtra("this place",(Parcelable) placeModels[position]);
                             i.putExtra("lat" , placeModels[position].getGeometry().getLocation().getLat());
                             i.putExtra("lng" ,placeModels[position].getGeometry().getLocation().getLng() );
-                            i.putExtra("rat",placeModels[position].getRating().floatValue());
+                            if(placeModels[position].getRating()!=null)i.putExtra("rat",placeModels[position].getRating().floatValue());
                             i.putExtra("name", placeModels[position].getName());
                             i.putExtra("type",placeModels[position].getTypes().get(1));
-                            i.putExtra("ph ref", placeModels[position].getPhotos().get(0).getPhotoReference());
+                            if(placeModels[position].getPhotos()!=null)i.putExtra("ph ref", placeModels[position].getPhotos().get(0).getPhotoReference());
 
                             startActivity(i);
                         }

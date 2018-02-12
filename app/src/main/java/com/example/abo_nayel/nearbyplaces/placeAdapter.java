@@ -44,12 +44,14 @@ public class placeAdapter extends ArrayAdapter {
         TextView type = (TextView) convertView.findViewById(R.id.type);
         RatingBar r = (RatingBar) convertView.findViewById(R.id.ratingBar);
         ImageView i = (ImageView) convertView.findViewById(R.id.photo);
-        if (placeModel.getPhotos().get(0).getPhotoReference().equals(null)) {
-        }else Picasso.with(getContext()).load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=40&photoreference=" +
-                placeModel.getPhotos().get(0).getPhotoReference() + "&key=AIzaSyDi9JdUYE28KGzwm5t-dLONa4zIaVne6jc").into(i);
+        assert placeModel != null;
+        if( placeModel.getPhotos() !=null){
+            Picasso.with(getContext()).load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=40&photoreference=" +
+                    placeModel.getPhotos().get(0).getPhotoReference() + "&key=AIzaSyDi9JdUYE28KGzwm5t-dLONa4zIaVne6jc").into(i);
+        }
 //        Toast.makeText(getContext(),placeModel.photos[0].getPhoto_reference(),Toast.LENGTH_SHORT).show();
 //        r.setIsIndicator(true);
-        r.setRating(placeModel.getRating().floatValue());
+        if(placeModel.getRating()!= null)r.setRating(placeModel.getRating().floatValue());
         nav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +64,7 @@ public class placeAdapter extends ArrayAdapter {
         });
         type.setText(placeModel.getTypes().get(1));
         name.setText(placeModel.getName());
+
         return convertView;
     }
 }

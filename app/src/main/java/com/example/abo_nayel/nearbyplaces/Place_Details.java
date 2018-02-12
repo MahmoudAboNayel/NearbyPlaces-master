@@ -22,6 +22,7 @@ public class Place_Details extends AppCompatActivity {
 
     ImageView im,map;
     double lat,lng;
+    String name ;
     RatingBar r;
     TextView nam , ty;
     Button fav,nav;
@@ -52,20 +53,21 @@ public class Place_Details extends AppCompatActivity {
 
          lat = getIntent().getDoubleExtra("lat",0);
          lng = getIntent().getDoubleExtra("lng",0);
-        PlaceModel place = (PlaceModel) getIntent().getSerializableExtra("this place");
-        Toast.makeText(this,place.getName(),Toast.LENGTH_SHORT).show();
+         name = getIntent().getStringExtra("name");
+        Toast.makeText(this,name,Toast.LENGTH_SHORT).show();
 
-        String name = getIntent().getStringExtra("name");
+        final String name = getIntent().getStringExtra("name");
         String type = getIntent().getStringExtra("type");
         String ph_ref = getIntent().getStringExtra("ph ref");
         float rat = getIntent().getFloatExtra("rat",0);
+        //final int id = getResources().getIdentifier("com.example.abo_nayel.nearbyplaces:drawable/fav_red.xml" , null, null);
 
-//        fav.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                fav.setBackground(getDrawable(0));
-//            }
-//        });
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fav.setBackground(getResources().getDrawable(R.drawable.fav_red));
+            }
+        });
 
         Picasso.with(getApplicationContext()).load("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&maxheight=250&photoreference="+
                 ph_ref+"&key=AIzaSyDi9JdUYE28KGzwm5t-dLONa4zIaVne6jc").into(im);
